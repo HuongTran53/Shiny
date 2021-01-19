@@ -1,0 +1,54 @@
+---
+title: "Predict Stopping distance based on Speed of in 1920"
+author: "Huong Tran"
+date: "1/18/2021"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introdution:
+- This is an assignment about building Shiny app of the course Developing Data Products.
+- I am using **cars** dataset.
+- **Note**: This dataset were recorded in the 1920s, which may yeild difference 
+in today cars. 
+
+## About **cars** dataset:
+```{r, echo=FALSE, include = FALSE}
+library(ggplot2)
+library(datasets)
+data(cars)
+```
+Now, we will take a look at the dataset:
+```{r}
+head(cars)
+```
+```{r}
+paste("The speed range from ", range(cars$speed)[1], "to", range(cars$speed)[2])
+```
+```{r}
+paste("The distance range from ", range(cars$dist[1]), "to", range(cars$dist)[2])
+```
+
+## Scatterplot:
+```{r, echo= FALSE, message = FALSE}
+g <- ggplot(data = cars, aes(speed, dist))
+g + geom_point() + geom_smooth(method = "lm") + labs(main = "Scatter plot and least square regression line")
+
+```
+## Linear Model:
+Using Least Square method:
+```{r, message = FALSE}
+model <- lm(dist ~ speed, data = cars)
+summary(model)
+```
+## Summary:
+- $p$-value of $F$-test is small, which mean the model is useful to predict the  
+stopping distance based on the speed.
+- However, $R^2$ = 0.6511, which means only $65.11\%$ of stopping distance can be 
+explained by this model.
+
+
+
